@@ -1,6 +1,8 @@
 # Data Scicence Portfolio
 
-In this repository you can find a collection of selected data science projects (and products) that I developed hroughout my career.
+In this repository you can find a collection of selected data science projects (and products) that I developed throughout my career.
+
+## Projects 
 
 ## Contents 
 
@@ -20,4 +22,4 @@ This is the Dashboard : [Salvador Dash](https://danieljimenez.shinyapps.io/salva
 * **Interpretability Machine Learning** : The Machine Learning applications with impact on everydays for decision-making with consistency (reasons) and coherence (depending on the problem), in this example is a prediction case : [MILE](https://www.danieljimenezm.com/post/2020-07-18-models_interpretability/)
 
 
-* **Data Analytics and Visualization** : Examples on data visualization, analysis, analytics and machine learning models 
+* **Data Analytics and Visualization** : Examples on data visualization, analysis, analytics and machine learning models: [Tidytuesday](https://github.com/carlosjimenez88M/Tidy-tuesday)
