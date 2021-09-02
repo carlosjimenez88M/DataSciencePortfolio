@@ -17,5 +17,7 @@ The key factors for this product are : AWS, Web Scraping, Data Visualization and
 This is the Dashboard : [Salvador Dash](https://danieljimenez.shinyapps.io/salvador/)
 
 
-* Interpretability Machine Learning : The Machine Learning applications with impact on everydays for decision-making with consistency (reasons) and coherence (depending on the problem), in this example is a prediction case : https://www.danieljimenezm.com/post/2020-07-18-models_interpretability/
+* **Interpretability Machine Learning** : The Machine Learning applications with impact on everydays for decision-making with consistency (reasons) and coherence (depending on the problem), in this example is a prediction case : [link](: https://www.danieljimenezm.com/post/2020-07-18-models_interpretability/)
 
+
+* **Data Analysis and Visualization** : Examples on data visualization, analysis, analytics and machine learning models 
