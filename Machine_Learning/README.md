@@ -4,4 +4,4 @@ The goal of *Machine Learning* project is demostred different techiques to addre
 
 |Challenge|Description|Goal|
 |--------:|----------:|---:|
-|[Board Game Ratings](https://www.kaggle.com/c/sliced-s01e01/overview)|<ul><li>[1 - Intro to TSA](https://nbviewer.jupyter.org/github/albahnsen/AdvancedMethodsDataAnalysisClass/blob/master/notebooks/01-IntroTSA.ipynb) </li> <li>[2 - ARIMA processes](https://nbviewer.jupyter.org/github/albahnsen/AdvancedMethodsDataAnalysisClass/blob/master/notebooks/02-ARIMA.ipynb) </li></ul>|
+|[Board Game Ratings](https://www.kaggle.com/c/sliced-s01e01/overview)|<ul><li>[Clean Data](https://github.com/carlosjimenez88M/DataScicencePortfolio/blob/master/Machine_Learning/Prediction/data_clean.R) </li> <li>[EDA](https://github.com/carlosjimenez88M/DataScicencePortfolio/blob/master/Machine_Learning/Prediction/EDA.md) </li></ul>|Predict the "geek" ratings for board games on BoardGameGeek.com. |
