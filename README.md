@@ -1,4 +1,4 @@
-# Data Scicence Portfolio
+# Data Science Portfolio
 
 In this repository you can find a collection of selected data science projects (and products) that I developed throughout my career.
 
