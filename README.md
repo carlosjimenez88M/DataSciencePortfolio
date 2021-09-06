@@ -9,6 +9,7 @@ In this repository you can find a collection of selected data science projects (
 * [NLP Dashboard](https://danieljimenez.shinyapps.io/salvador/): This Dashboard combines two lenguages (R and Python), and aimed are : 
 
 |Goal| Technology|
+|----:|----------:|
 |Text Classification|Python (Transformers and BERT)|
 |Model: Questions and Answering |Python (NLP and Deep learning features)|
 |Text Mining and EDA|R (tidytext and Topic Modeling)|
