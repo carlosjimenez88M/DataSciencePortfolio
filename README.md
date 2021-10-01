@@ -23,6 +23,8 @@ link: [Here](https://danieljimenez.shinyapps.io/salvador/)
 
 * **Data Analytics and Visualization** : Examples on data visualization, analysis and  analytics projects: [Tidytuesday](https://github.com/carlosjimenez88M/Tidy-tuesday)
 
+* __Bayesian Machine Learning presentation:__ Examples and explained Bayesian Machine Learning techniques, you can see this presentation, documentation and practical example making click [**here**](https://github.com/carlosjimenez88M/Bayes_presentation)
+
 ## In progress
 
 * Computational Vision with dockerized application 
