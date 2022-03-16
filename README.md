@@ -14,6 +14,9 @@ In this repository you can find a collection of selected data science projects (
 
 - ### Natural Lenguaje Processing
   - [Question Answering, NER and Text Classification](https://danieljimenez.shinyapps.io/hola_g/): Three with fine tune models, integrated with Shiny to generate a exploratory analysis with the prospect of gaining deep understanding in latam policys makers.
+  - [Fine Tuning optimization on Question-Answering Models](https://github.com/carlosjimenez88M/DataSciencePortfolio/blob/master/NLP/OptimizationQA.ipynb): Using Hugging Face Transformers,based on the stories from the CoQA dataset to fine-tuned BERT model.
+
+
 
 - ### Deep Learning 
   
