@@ -1,0 +1,333 @@
+---
+title: "AirBnB Prices"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, warning = FALSE, message = FALSE)
+```
+
+
+```{r}
+library(tidyverse)
+library(infer)
+library(tidymodels)
+library(textrecipes)
+library(scales)
+library(stacks)
+library(tidytext)
+theme_set(theme_classic())
+```
+
+```{r}
+## Load Dataset
+set.seed(1234)
+train <- read_csv('data/train.csv') %>%
+  select(-id)
+test <- read_csv('data/test.csv')%>%
+  select(-id)
+sample <- read_csv('data/sample_submission.csv')
+
+spl <- initial_split(train,prop = 0.75)
+train_set <- training(spl)
+test_set <-testing(spl)
+
+```
+
+
+## Exploratory Data Analysis and Feature Engineering
+
+
+```{r}
+train_set %>%
+  ggplot(aes(price, fill=neighbourhood_group))+
+  geom_histogram(alpha=0.4)+
+  scale_x_log10()+
+  labs(title = 'Log Distributions price',
+       subtitle = 'By Neighbourhood',
+       fill = '')
+```
+
+
+This price are log scale with zeros values! Is necessary mutate price in = $log(price)+1$
+
+
+```{r}
+
+train_set <- train_set %>%
+  mutate(log_price = log(price + 1))
+
+test_set <- test_set %>%
+  mutate(log_price = log(price + 1))
+
+```
+
+```{r}
+train_set %>%
+  ggplot(aes(log_price, fill=neighbourhood_group))+
+  geom_histogram(alpha=0.6)+
+  facet_grid(~neighbourhood_group, scales = 'free_y')
+```
+
+
+
+I think that is necessary a rutine with inference to understand Bronx and Staten Island 
+
+
+```{r,fig.height=4}
+groups_focus <- c('Bronx','Staten Island')
+
+infer_comparative<-train_set %>%
+  filter(neighbourhood_group %in% groups_focus)
+
+infer_comparative %>%
+  group_by(neighbourhood,neighbourhood_group)%>%
+  count(sort = TRUE)%>%
+  ungroup()%>%
+  mutate(neighbourhood=fct_reorder(neighbourhood,n))%>%
+  ggplot(aes(n,neighbourhood,fill=neighbourhood_group))+
+  geom_col()+
+  labs(title = 'Comparative Frequence between Bronx and Staten Island',
+       fill='')
+```
+
+
+```{r}
+infer_comparative %>%
+  ggplot(aes(log_price,
+             neighbourhood_group,
+             fill=neighbourhood_group,
+             color=neighbourhood_group))+
+  geom_boxplot(alpha=0.4)+
+  guides(fill='none',
+         color='none')+
+  labs(title = '(Log)-Price Comparative between Staten Island and Bronx',
+       x = '(log) Price',
+       y = '')
+
+```
+Between percentile 25th and 75th the similarity levels are most closest in prices.
+
+
+```{r, fig.height=4}
+infer_comparative %>%
+  mutate(neighbourhood=fct_reorder(neighbourhood,log_price)) %>%
+  ggplot(aes(log_price,
+             neighbourhood,
+             fill=neighbourhood_group,
+             color=neighbourhood_group))+
+  geom_boxplot(alpha=0.4)+
+  geom_vline(xintercept = mean(infer_comparative$log_price),linetype='dashed')+
+  guides(fill='none',
+         color='none')+
+  labs(title = '(Log)-Price Comparative between Staten Island and Bronx',
+       x = '(log) Price',
+       y = '')
+```
+
+The values has a behaviour very similar into this neighbourhood, for this now is necessary create inferential modelling to understand some effects in this neighbourhood.
+
+
+```{r}
+set.seed(123)
+neighb_price<-infer_comparative %>%
+  specify(neighbourhood_group~log_price,success = "Bronx")
+
+```
+
+Now that we have different kinds of resampled datasets, we can compute some statistics. Chi test  this is a number that tells us how much difference exists between our observed counts.
+
+
+```{r}
+set.seed(234)
+
+observed_fit <- neighb_price %>%
+  specify(log_price~neighbourhood_group)%>%
+  fit()
+
+null_fits <-neighb_price %>% 
+  specify(log_price~neighbourhood_group) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute")%>%
+  fit()
+
+get_confidence_interval(
+  null_fits, 
+  point_estimate = observed_fit, 
+  level = .95
+)
+
+visualize(null_fits) + 
+  shade_p_value(observed_fit, direction = "both")
+```
+
+Low Differences between this neighbourhoods .
+
+
+```{r}
+null_distribution_prices<-neighb_price %>% 
+  specify(log_price~neighbourhood_group) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("Staten Island", "Bronx"))
+
+
+obs_diff_means <- neighb_price %>% 
+  specify(log_price~neighbourhood_group) %>%
+  calculate(stat = "diff in means", order = c("Staten Island", "Bronx"))
+
+visualize(null_distribution_prices, bins = 10) + 
+  shade_p_value(obs_stat = obs_diff_means, direction = "both")
+```
+
+```{r}
+null_distribution_prices %>% 
+  get_p_value(obs_stat = obs_diff_means, direction = "both")
+```
+
+This neighbords are the same in prices !
+
+
+
+
+```{r}
+summarize_prices <- function(tbl) {
+  tbl %>%
+    summarize(avg_price = exp(mean(log(price+1))) - 1,
+              median_price = exp(median(log(price+1))) - 1,
+              n = n()) %>%
+    arrange(desc(n))
+}
+
+train_set %>%
+  group_by(neighbourhood_group) %>%
+  summarize_prices() %>%
+  mutate(neighbourhood_group = fct_reorder(neighbourhood_group, median_price)) %>%
+  ggplot(aes(median_price, neighbourhood_group)) +
+  geom_col()
+```
+
+
+## Experimental Design with rooms 
+
+
+
+```{r}
+train_set %>%
+  mutate(room_type = fct_reorder(room_type, price)) %>%
+  ggplot(aes(exp(log(price+1)), room_type)) +
+  geom_boxplot() +
+  scale_x_log10()
+```
+
+
+```{r}
+set.seed(1234)
+train_set %>%
+  sample_n(1000) %>%
+  ggplot(aes(minimum_nights + 1, log_price)) +
+  geom_point() +
+  scale_x_log10() +
+  geom_smooth(method = "loess")
+```
+
+
+
+```{r}
+
+prices<-train_set %>%
+  unnest_tokens(word, name) %>%
+  group_by(word) %>%
+  summarize_prices()
+
+mean(prices$avg_price)
+
+train_set %>%
+  unnest_tokens(word, name) %>%
+  group_by(word) %>%
+  summarize_prices() %>%
+  head(60) %>%
+  mutate(word = fct_reorder(word, avg_price)) %>%
+  ggplot(aes(avg_price, word, size = n, color=avg_price>median(prices$avg_price))) +
+  geom_point(show.legend = FALSE)+
+  geom_vline(xintercept = median(prices$avg_price),color='gray',linetype='dashed')+
+  labs(title = 'Comparative Prices by Descriptions',
+       x='Log Prices')
+```
+
+
+```{r}
+train_set %>%
+  ggplot(aes(last_review, log(price+1))) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+## Model 
+
+```{r}
+set.seed(2022)
+mset <- metric_set(rmse,mae)
+grid_control <- control_grid(save_pred = TRUE,
+                             save_workflow = TRUE,
+                             extract = extract_model)
+train_fold <- train_set %>%
+  vfold_cv(10)
+
+
+prep_juice <- function(d) juice(prep(d))
+xg_rec <- recipe(price ~ minimum_nights + room_type + number_of_reviews +
+                   latitude + longitude + neighbourhood_group +
+                   reviews_per_month + calculated_host_listings_count +
+                   availability_365 + last_review,
+                 data = train_set) %>%
+  step_mutate(is_manhattan = neighbourhood_group == "Manhattan") %>%
+  step_rm(neighbourhood_group) %>%
+  step_mutate(last_review = coalesce(as.integer(Sys.Date() - last_review), 0)) %>%
+  step_dummy(all_nominal_predictors())
+
+
+xg_mod <- boost_tree("regression",
+                     mtry = tune(),
+                     trees = tune(),
+                     learn_rate = tune()) %>%
+  set_engine("xgboost")
+
+xg_wf <- workflow() %>%
+  add_recipe(xg_rec) %>%
+  add_model(xg_mod)
+
+xg_tune <- xg_wf %>%
+  tune_grid(train_fold,
+            metrics = mset,
+            control = grid_control,
+            grid = crossing(mtry = c(1:7),
+                            trees = seq(250, 1500, 25),
+                            learn_rate = c(.008, .01)))
+
+autoplot(xg_tune)
+
+xg_fit <- xg_wf %>%
+  finalize_workflow(select_best(xg_tune)) %>%
+  fit(train)
+
+xg_fit %>%
+  augment(test_set) %>%
+  mutate(.pred=log(.pred+1))%>%
+  ggplot(aes(log_price,.pred))+
+  geom_point(alpha=0.4)+
+  geom_abline(color='blue')+
+  labs(title = 'Comparative values with XGboost Model')
+
+```
+
+```{r}
+importances <- xgboost::xgb.importance(model = xg_fit$fit$fit$fit)
+
+importances %>%
+  mutate(Feature = fct_reorder(Feature, Gain)) %>%
+  ggplot(aes(Gain, Feature)) +
+  geom_col()
+
+```
+
