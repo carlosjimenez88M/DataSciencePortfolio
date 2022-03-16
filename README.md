@@ -10,7 +10,7 @@ In this repository you can find a collection of selected data science projects (
 - ### Machine Learning
   - [Predict board game ratings](https://github.com/carlosjimenez88M/DataSciencePortfolio/tree/master/Machine_Learning):A model to predict the value of a given board game using various statistical analysis tools. Identified the best method to predict ratings. 
 
-  - [Fine tuning and optimization in Xgboost Regressor](https://github.com/carlosjimenez88M/DataSciencePortfolio/tree/master/Machine_Learning):Statistics applications to fineTuning Price in case AirBnB.
+  - [Fine tuning and optimization in Xgboost Regressor](https://github.com/carlosjimenez88M/DataSciencePortfolio/tree/master/Machine_Learning): Statistics applications to fineTuning Price predictions in case AirBnB.
 
 - ### Natural Lenguaje Processing
   - [Question Answering, NER and Text Classification](https://danieljimenez.shinyapps.io/hola_g/): Three with fine tune models, integrated with Shiny to generate a exploratory analysis with the prospect of gaining deep understanding in latam policys makers.
