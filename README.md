@@ -14,8 +14,8 @@ In this repository you can find a collection of selected data science projects (
   - [Competition models to regression problem with anomalies detection approach](https://github.com/carlosjimenez88M/DataSciencePortfolio/blob/master/Machine_Learning/lender_model/prediction_model.md): Approach to solving a regression problem with xgboost interpretability
 
   ![](https://github.com/carlosjimenez88M/DataSciencePortfolio/raw/master/Machine_Learning/lender_model/prediction_model_files/figure-gfm/unnamed-chunk-23-1.png)
-  
-  - 
+
+  - [Classification models competition]()
 
  
 
