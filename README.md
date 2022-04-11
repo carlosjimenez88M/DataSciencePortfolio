@@ -15,7 +15,7 @@ In this repository you can find a collection of selected data science projects (
 
   ![](https://github.com/carlosjimenez88M/DataSciencePortfolio/raw/master/Machine_Learning/lender_model/prediction_model_files/figure-gfm/unnamed-chunk-23-1.png)
 
-  - [Classification models competition]()
+  - [Classification models competition](https://github.com/carlosjimenez88M/DataSciencePortfolio/blob/master/Machine_Learning/classification/model_classification.ipynb) : Classifications models competitions to find the best performance and feature importance!
 
  
 
