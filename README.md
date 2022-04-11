@@ -11,8 +11,13 @@ In this repository you can find a collection of selected data science projects (
   - [Predict board game ratings](https://github.com/carlosjimenez88M/DataSciencePortfolio/tree/master/Machine_Learning):A model to predict the value of a given board game using various statistical analysis tools. Identified the best method to predict ratings. 
 
   - [Fine tuning and optimization in Xgboost Regressor](https://github.com/carlosjimenez88M/DataSciencePortfolio/blob/master/Machine_Learning/statistical_modeling_to_machine_learning/ARBNB-PRICES.md): Statistics applications to fineTuning Price predictions in case AirBnB.
-  - [Competition models to regression problem with anomalies detection approach](): Approach to solving a regression problem
-  ![](https://miro.medium.com/max/540/1*J2t6jvpkgXNUkbgS7DyRgQ.png)
+  - [Competition models to regression problem with anomalies detection approach](https://github.com/carlosjimenez88M/DataSciencePortfolio/blob/master/Machine_Learning/lender_model/prediction_model.md): Approach to solving a regression problem with xgboost interpretability
+
+  ![](https://github.com/carlosjimenez88M/DataSciencePortfolio/raw/master/Machine_Learning/lender_model/prediction_model_files/figure-gfm/unnamed-chunk-23-1.png)
+  
+  - 
+
+ 
 
 - ### Natural Lenguaje Processing
   - [Question Answering, NER and Text Classification](https://danieljimenez.shinyapps.io/hola_g/): Three with fine tune models, integrated with Shiny to generate a exploratory analysis with the prospect of gaining deep understanding in latam policys makers.
