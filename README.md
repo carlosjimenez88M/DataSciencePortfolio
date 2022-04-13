@@ -28,4 +28,6 @@ In this repository you can find a collection of selected data science projects (
 - ### Deep Learning 
   
 
-  -[Image Recognition movie character and comics to Figure collection classification](https://github.com/carlosjimenez88M/batman_peacemaker_recognition): With help of image processing algoritms and deep learning techniques I try compute images of Figure collections, looking at movie characters and comics images (inputs).
+  - [Image Recognition movie character and comics to Figure collection classification](https://github.com/carlosjimenez88M/batman_peacemaker_recognition): With help of image processing algoritms and deep learning techniques I try compute images of Figure collections, looking at movie characters and comics images (inputs).
+
+![](https://github.com/carlosjimenez88M/batman_peacemaker_recognition/blob/master/train/classification.png?raw=true)
